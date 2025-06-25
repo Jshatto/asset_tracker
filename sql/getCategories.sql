@@ -1,0 +1,1 @@
+SELECT id, category_name, default_useful_life, default_depreciation_method FROM categories ORDER BY category_name;

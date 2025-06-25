@@ -1,0 +1,1 @@
+SELECT * FROM assets LIMIT 1;

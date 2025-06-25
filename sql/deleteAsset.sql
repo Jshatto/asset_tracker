@@ -1,0 +1,1 @@
+DELETE FROM assets WHERE id = {{assetTable_Main.selectedRow.id}}
