@@ -1,0 +1,25 @@
+-- db/migrations/001_create_kpi_views.sql
+
+-- 1) Assets KPIs
+CREATE OR REPLACE VIEW assets_kpis AS
+SELECT
+  COUNT(*)                           AS total_assets,
+  SUM(purchase_price)                AS total_original_cost,
+  SUM(purchase_price) 
+    - SUM(accumulated_depreciation)  AS net_book_value
+FROM assets;
+
+-- 2) Depreciation KPIs (book vs. tax)
+CREATE OR REPLACE VIEW depreciation_kpis AS
+SELECT
+  SUM(accumulated_depr_book)         AS cumulative_depr_book,
+  SUM(accumulated_depr_tax)          AS cumulative_depr_tax,
+  SUM(depr_amt_book) FILTER (
+    WHERE depr_date >= date_trunc('year', current_date)
+  )                                   AS ytd_depr_book,
+  SUM(depr_amt_tax)  FILTER (
+    WHERE depr_date >= date_trunc('year', current_date)
+  )                                   AS ytd_depr_tax,
+  AVG(useful_life_book)              AS avg_life_book_years,
+  AVG(useful_life_tax)               AS avg_life_tax_years
+FROM assets;
