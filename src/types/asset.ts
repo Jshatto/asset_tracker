@@ -1,6 +1,7 @@
 // src/types/asset.ts
-export interface AssetImport {
-  name: string
+export interface Asset {
+  id: number
+  asset_name: string
   purchase_date: string    // ISO date
   purchase_price: number
   useful_life: number
